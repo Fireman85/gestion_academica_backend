@@ -5,6 +5,7 @@ from rest_framework import status
 from django.contrib.auth import authenticate
 from .models import Programa
 from .serializers import ProgramaSerializer
+from django.shortcuts import get_object_or_404
 
 
 class ProgramaView(APIView):
@@ -13,6 +14,38 @@ class ProgramaView(APIView):
         programas_queryset = Programa.objects.all()
         serializer = ProgramaSerializer(programas_queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # POST - Crear un nuevo programa
+    def post(self, request):
+        serializer = ProgramaSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, id):
+        programa = get_object_or_404(Programa, id=id)
+        serializer = ProgramaSerializer(programa, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_404_NOT_FOUND
+        )
+
+    def delete(self, request, id):
+        programa = get_object_or_404(Programa, id=id)
+        programa.delete()
+        return Response({
+            "mensaje": "Programa eliminado correctamente"
+          },
+          status=status.HTTP_200_OK
+        )
 
 
 class LoginView(APIView):

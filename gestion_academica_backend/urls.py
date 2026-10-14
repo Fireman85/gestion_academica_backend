@@ -22,5 +22,6 @@ from academico.views import LoginView, ProgramaView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/login/', LoginView.as_view(), name="login"),
-    path('programas/', ProgramaView.as_view(), name="mi_vista")
+    path('programas/', ProgramaView.as_view(), name="mi_vista"),
+    path('programas/<int:id>/', ProgramaView.as_view(), name="detail")
 ]
