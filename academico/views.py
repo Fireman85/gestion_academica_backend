@@ -3,6 +3,16 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from django.contrib.auth import authenticate
+from .models import Programa
+from .serializers import ProgramaSerializer
+
+
+class ProgramaView(APIView):
+    def get(self, request, id=None):
+
+        programas_queryset = Programa.objects.all()
+        serializer = ProgramaSerializer(programas_queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class LoginView(APIView):
