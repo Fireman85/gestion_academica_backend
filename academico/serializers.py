@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Programa
+from .models import Programa, Ficha
 
 
 class ProgramaSerializer(serializers.ModelSerializer):
@@ -27,3 +27,9 @@ class ProgramaSerializer(serializers.ModelSerializer):
                 "El nivel debe ser: Técnico, Tecnólogo o  Especialización"
             )
         return value
+
+
+class FichaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ficha
+        fields = "__all__"

@@ -3,15 +3,20 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from django.contrib.auth import authenticate
-from .models import Programa
-from .serializers import ProgramaSerializer
-from django.shortcuts import get_object_or_404
+from .models import Programa, Ficha
+from .serializers import ProgramaSerializer, FichaSerializer
+# from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 
 
 class ProgramaViewSet(viewsets.ModelViewSet):
     queryset = Programa.objects.all()
     serializer_class = ProgramaSerializer
+
+
+class FichaViewSet(viewsets.ModelViewSet):
+    queryset = Ficha.objects.all()
+    serializer_class = FichaSerializer
 
 # class ProgramaView(APIView):
 #     def get(self, request, id=None):
